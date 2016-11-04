@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::resource('room', 'RoomController');
+Route::resource('room', 'RoomsController');
