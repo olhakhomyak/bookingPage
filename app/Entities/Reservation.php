@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,8 @@ class Reservation extends Model
         'user_id',
         'room_id',
         'reserv_from',
-        'reserv_to'
+        'reserv_to',
+        'comment'
     ];
 
 
