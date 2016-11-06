@@ -16,6 +16,7 @@ class RoomsController extends Controller
         return $rooms;
     }
 
+
     public function store(Request $request)
     {
         $room = new Room($request->all());
