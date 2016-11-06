@@ -14,12 +14,13 @@ class ReservationTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        foreach (range(1,10) as $index) {
+        foreach (range(1,40) as $index) {
             Reservation::create([
                 'user_id'       => $faker->numberBetween(1,10),
-                'room_id'       => $faker->numberBetween(1,10),
-                'reserv_from'   => $faker->time(),
-                'reserv_to'     => $faker->time()
+                'room_id'       => $faker->numberBetween(1, 10),
+                'reserv_from'   => $faker->numberBetween(0, 23),
+                'reserv_to'     => $faker->numberBetween(0, 23),
+                'comment'       => $faker->realText($maxNbChars = 100, $indexSize = 2),
             ]);
         }
     }

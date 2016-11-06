@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use App\Entities\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,11 +13,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Entities\User::class, 10)->create();
-            DB::table('users')->insert([
-                'name'       => str_random(10),
-                'email'      => str_random(10).'@mail.com',
-                'password'   => bcrypt('password')
+
+        $faker = Faker\Factory::create();
+
+        foreach (range(1, 10) as $index) {
+            User::create([
+                'name'      => $faker->name,
+                'email'     => $faker->email,
+                'password'  => bcrypt('secret'),
             ]);
+        }
     }
 }
