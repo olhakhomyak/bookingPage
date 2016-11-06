@@ -10,13 +10,20 @@ use App\Http\Controllers\Controller;
 
 class ReservationController extends Controller
 {
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function index()
     {
         $reserv = Reservation::all();
         return $reserv;
     }
 
-
+    /**
+     * @param Request $request
+     * @return Reservation
+     */
     public function store(Request $request)
     {
         $reserv = new Reservation($request->all());
@@ -24,4 +31,5 @@ class ReservationController extends Controller
 
         return $reserv;
     }
+
 }

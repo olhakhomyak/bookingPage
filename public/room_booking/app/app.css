@@ -1,0 +1,53 @@
+/**********
+GENERAL
+**********/
+body {  background-color: #E5E5E2;  }
+h1 { color: #154A48; }
+.center-content { text-align: center; }
+.btn:focus, .btn:active, .btn:focus:active {
+  outline: none;
+}
+
+/******************
+ITEMS CONTAINER
+******************/
+.info-container > div {
+  background: linear-gradient(to top right, #5F9896, #154A48);
+  border-radius: 5px;
+  margin: 15px;
+  padding: 15px;
+  color: #FFFFFF;
+}
+
+/***************
+MODAL WINDOW
+***************/
+.book-modal {  background-color: #4B5A5D;  }
+.comment-block {  padding-right: 0;  }
+.close:hover { color: #D32F2F}
+.modal-header > span {  font-size: 18px;  }
+.date > select {  color: #000000;  }
+#end-date-container {  margin-left: 20px;  }
+#user_comment {  border-radius: 5px;  }
+.close {
+  color: #F10038;
+  opacity: 1.0;
+  text-shadow: 0;
+  font-size: 28px;
+}
+
+.close::selection,
+.close:focus {
+  background: inherit;
+  outline: none;
+}
+
+/******************
+VALIDATION BLOCK
+*******************/
+.alert-request-error {
+  background-color: transparent;
+  border-radius: 5px;
+  color: #fff;
+  font-style: italic;
+}

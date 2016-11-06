@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 
 class RoomsController extends Controller
 {
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function index()
     {
         $rooms = Room::all();
@@ -17,6 +20,10 @@ class RoomsController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return Room
+     */
     public function store(Request $request)
     {
         $room = new Room($request->all());
