@@ -4,6 +4,8 @@ GENERAL
 body {  background-color: #E5E5E2;  }
 h1 { color: #154A48; }
 .center-content { text-align: center; }
+.add-padding-left { padding-left: 15px; }
+.inline-block { display: inline-block; }
 .btn:focus, .btn:active, .btn:focus:active {
   outline: none;
 }

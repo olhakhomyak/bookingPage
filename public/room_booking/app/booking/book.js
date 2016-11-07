@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('myApp.book', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstrap'])
+angular.module('myApp.book', ['ngRoute',
+                              'ngAnimate',
+                              'ngSanitize',
+                              'ui.bootstrap',
+                              'ui-notification'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/book', {
@@ -34,16 +38,15 @@ angular.module('myApp.book', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstra
     /**
      * get data from user form
      */
-    $scope.reserv_from = new Date().setMinutes('00');
-    $scope.reserv_to = new Date().setMinutes('00');
+    $scope.reserv_from = null;
+    $scope.reserv_to = null;
     $scope.comment = null;
     $scope.makeReserv = function (reserv_from, reserv_to, comment, room) {
-        // alert(reserv_from.getHours());
         var data = {
             user_id: 5,
             room_id: room,
-            reserv_from: reserv_from.getHours(),
-            reserv_to: reserv_to.getHours(),
+            reserv_from: new Date(reserv_from).getHours(),
+            reserv_to: new Date(reserv_to).getHours(),
             comment: comment
         };
 
@@ -51,15 +54,10 @@ angular.module('myApp.book', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstra
          * submit reservation
          */
         $http.post('http://localhost:8000/reservation', JSON.stringify(data)).then(function (response) {
-            // console.log(response);
-            location.reload();
+            console.log(response);
+            setTimeout("location.reload()", 5000);
         });
 
     };
-
-    $scope.hstep = 1;
-    $scope.mstep = 15;
-
-
 
   });
