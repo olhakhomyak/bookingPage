@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.book', ['ngRoute'])
+angular.module('myApp.book', ['ngRoute', 'ngAnimate', 'ngSanitize', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/book', {
@@ -34,15 +34,16 @@ angular.module('myApp.book', ['ngRoute'])
     /**
      * get data from user form
      */
-    $scope.reserv_from = null;
-    $scope.reserv_to = null;
+    $scope.reserv_from = new Date().setMinutes('00');
+    $scope.reserv_to = new Date().setMinutes('00');
     $scope.comment = null;
     $scope.makeReserv = function (reserv_from, reserv_to, comment, room) {
+        // alert(reserv_from.getHours());
         var data = {
             user_id: 5,
             room_id: room,
-            reserv_from: reserv_from,
-            reserv_to: reserv_to,
+            reserv_from: reserv_from.getHours(),
+            reserv_to: reserv_to.getHours(),
             comment: comment
         };
 
@@ -54,8 +55,11 @@ angular.module('myApp.book', ['ngRoute'])
             location.reload();
         });
 
-    }
+    };
 
-  }
+    $scope.hstep = 1;
+    $scope.mstep = 15;
 
-);
+
+
+  });

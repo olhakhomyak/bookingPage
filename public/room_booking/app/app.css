@@ -26,8 +26,8 @@ MODAL WINDOW
 .comment-block {  padding-right: 0;  }
 .close:hover { color: #D32F2F}
 .modal-header > span {  font-size: 18px;  }
-.date > select {  color: #000000;  }
-#end-date-container {  margin-left: 20px;  }
+.date > input {  color: #000000;  }
+#end-date-container {  margin-left: 5px;  }
 #user_comment {  border-radius: 5px;  }
 .close {
   color: #F10038;
@@ -36,10 +36,17 @@ MODAL WINDOW
   font-size: 28px;
 }
 
+.btn-link, .btn-link:hover {  color: #FFFFFF}
+
 .close::selection,
 .close:focus {
   background: inherit;
   outline: none;
+}
+
+.date-label {
+  position: relative;
+  top: -45px;
 }
 
 /******************

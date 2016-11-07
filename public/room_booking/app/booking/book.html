@@ -15,10 +15,7 @@
         <div>
             <p>Room type: {{ room.room_type }}</p>
             <p>Room number: {{ room.number }}</p>
-            <p ng-if="room.available==1">Available to order: Yes</p>
-            <p ng-if="room.available==0">Available to order: No</p>
             <button type="button"
-                    ng-class="{true: 'invisible'}[room.available==0]"
                     class="btn btn-default btn-block btn-book"
                     data-toggle="modal"
                     data-target="#book{{room.id}}">
@@ -58,36 +55,50 @@
                                 </div><!--//validation block-->
 
                                 <!--start date input-->
-                                <div class="form-group col-lg-4 col-md-4 col-sm-5 col-xs-5">
-                                    <div class='input-group date'>
-                                        <label for="start_date"
-                                               class="control-label"
-                                                style="padding-left: 15px">
-                                            From &nbsp;&nbsp;
-                                        </label>
-                                        <select name="start_date"
-                                                id="start_date"
-                                                ng-model="reserv_from"
-                                                required>
-                                        </select>
-                                    </div><!--//input group-->
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <label for="start_date"
+                                           class="control-label date-label"
+                                           style="padding-left: 15px; margin-bottom: 20px">
+                                        From &nbsp;&nbsp;
+                                    </label>
+
+                                    <div uib-timepicker
+                                         ng-model="reserv_from"
+                                         id="start_date"
+                                         show-meridian="false"
+                                         minute-step="60"
+                                         mousewheel="true"
+                                         style="display: inline-block">
+                                    </div>
                                 </div><!--//start date input-->
 
                                 <!--end date input-->
-                                <div class="form-group col-lg-4 col-lg-offset-1 col-md-4 col-sm-5 col-xs-5"
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12"
                                      id="end-date-container">
-                                    <div class='input-group date'>
-                                        <label for="end_date"
-                                               class="control-label">
-                                            To &nbsp;&nbsp;
-                                        </label>
-                                        <select name="end_date"
-                                                id="end_date"
-                                                ng-model="reserv_to"
-                                                required>
-                                        </select>
-                                    </div><!--//input group-->
+                                    <label for="end_date"
+                                           class="control-label date-label"
+                                           style="padding-left: 15px">
+                                        To &nbsp;&nbsp;
+                                    </label>
+
+                                    <div uib-timepicker
+                                         ng-model="reserv_to"
+                                         id="end_date"
+                                         show-meridian="false"
+                                         minute-step="60"
+                                         mousewheel="true"
+                                         style="display: inline-block">
+                                    </div>
                                 </div><!--//end date input-->
+
+                                <!--validation block-->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                     ng-show="reservation_form.user_comment.$untouched">
+                                    <div class="alert-request-error alert-warning"
+                                         ng-show="reservation_form.user_comment.$error.required">
+                                        Please, specify reservation details
+                                    </div><!--//alert text block-->
+                                </div><!--//validation block-->
 
                                 <!--comment input-->
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-block">
@@ -96,14 +107,7 @@
                                            style="padding-left: 15px">
                                         Comment
                                     </label>
-                                    <!--validation block-->
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                         ng-show="reservation_form.user_comment.$untouched">
-                                        <div class="alert-request-error alert-warning"
-                                             ng-show="reservation_form.user_comment.$error.required">
-                                            Please, specify your reservation details
-                                        </div><!--//alert text block-->
-                                    </div><!--//validation block-->
+
                                     <!--textarea-->
                                     <div class='input-group col-lg-12 col-md-12 col-sm-12 col-xs-12'
                                          style="padding-left: 15px">
@@ -143,6 +147,14 @@
                                            class="btn btn-success btn-block">
                                 </div><!--//submit button-->
 
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('.date').datetimepicker({
+                                            format: 'LT'
+                                        });
+                                    });
+                                </script>
+
                             </form>
                         </div><!--//modal-body-->
                     </div><!--//modal-content-->
@@ -153,15 +165,3 @@
 </div><!--//items container-->
 
 </div><!--//main container-fluid-->
-
-<!--change time view in booking form-->
-<script>
-    for(var i = 0; i < 24; i++) {
-        var s = i.toString();
-        if(s.length == 1) {
-            s = "0" + s;
-        }
-        document.getElementById("start_date").innerHTML += ("<option value='" + i + "'>" + s + " : 00</option>");
-        document.getElementById("end_date").innerHTML += ("<option value='" + i + "'>" + s + " : 00</option>");
-    }
-</script>
