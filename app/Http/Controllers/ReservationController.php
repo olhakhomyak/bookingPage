@@ -28,12 +28,12 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $reservations = Reservation::where('room_id', $request->get('room_id'))
-            ->where('reserv_from', '<=', $request->get('reserv_from'))
-            ->where('reserv_to', '>=', $request->get('reserv_to'))
-            ->orWhere('reserv_from', '>=', $request->get('reserv_from'))
-            ->where('reserv_from', '<=', $request->get('reserv_to'))
-            ->orWhere('reserv_to', '<=', $request->get('reserv_to'))
-            ->where('reserv_to', '>=', $request->get('reserv_from'))->get();
+            ->where('reserv_from', '<', $request->get('reserv_from'))
+            ->where('reserv_to', '>', $request->get('reserv_to'))
+            ->orWhere('reserv_from', '>', $request->get('reserv_from'))
+            ->where('reserv_from', '<', $request->get('reserv_to'))
+            ->orWhere('reserv_to', '<', $request->get('reserv_to'))
+            ->where('reserv_to', '>', $request->get('reserv_from'))->get();
 
         if (count($reservations)) {
             return response()->json([

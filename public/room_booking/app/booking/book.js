@@ -13,7 +13,7 @@ angular.module('myApp.book', ['ngRoute',
   });
 }])
 
-.controller('BookCtrl', function($scope, $http) {
+.controller('BookCtrl', function($scope, $http, Notification) {
 
     $scope.rooms = [];
     $scope.comments = [];
@@ -41,6 +41,7 @@ angular.module('myApp.book', ['ngRoute',
     $scope.reserv_from = null;
     $scope.reserv_to = null;
     $scope.comment = null;
+    $scope.room = null;
     $scope.makeReserv = function (reserv_from, reserv_to, comment, room) {
         var data = {
             user_id: 5,
@@ -54,8 +55,16 @@ angular.module('myApp.book', ['ngRoute',
          * submit reservation
          */
         $http.post('http://localhost:8000/reservation', JSON.stringify(data)).then(function (response) {
-            console.log(response);
-            setTimeout("location.reload()", 5000);
+            if(response.data.error) {
+                Notification.error({message: "<p>Room is not available at this time</p>", delay: 5000});
+                setTimeout("location.reload()", 5000);
+                // console.log(response);
+            } else {
+                Notification.success({message: "<p>Reservation has been successfully completed</p>", delay: 5000});
+                setTimeout("location.reload()", 5000);
+                // console.log(response);
+            }
+
         });
 
     };

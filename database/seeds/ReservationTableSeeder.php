@@ -14,7 +14,7 @@ class ReservationTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        foreach (range(1,40) as $index) {
+        foreach (range(1,20) as $index) {
             Reservation::create([
                 'user_id'       => $faker->numberBetween(1,10),
                 'room_id'       => $faker->numberBetween(1, 10),
