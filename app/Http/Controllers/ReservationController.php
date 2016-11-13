@@ -11,19 +11,6 @@ use App\Http\Controllers\Controller;
 
 class ReservationController extends Controller
 {
-
-    protected $model;
-
-    public function __construct(Reservation $reservation)
-    {
-        $this->model = $reservation;
-    }
-
-    public function getAllReserv()
-    {
-        return $this->model->with('userReserv', 'roomReserv')->get();
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
@@ -32,6 +19,7 @@ class ReservationController extends Controller
         $reserv = Reservation::all();
         return $reserv;
     }
+
 
     /**
      * @param Request $request
@@ -62,7 +50,7 @@ class ReservationController extends Controller
         $reserv = new Reservation($request->all());
         $reserv->save();
 
-        return $reserv->with('userReserv', 'roomReserv')->get();
+        return $reserv;
     }
 
 }

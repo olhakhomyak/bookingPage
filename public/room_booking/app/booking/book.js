@@ -13,6 +13,9 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
+/**
+ * change timestamp date format to js
+ */
 app.filter('convertToDate', function() {
     return function(str){
         return new Date(str);
@@ -20,9 +23,11 @@ app.filter('convertToDate', function() {
 });
 
 app.controller('BookCtrl', function($scope, $http, Notification) {
-
+    /**
+     * get full reservation data
+     * @type {Array}
+     */
     $scope.rooms = [];
-
     $http.get("http://localhost:8000/get-all-rooms").then(function (response) {
        $scope.rooms = response.data;
         console.log(response.data);
@@ -50,18 +55,14 @@ app.controller('BookCtrl', function($scope, $http, Notification) {
         $http.post('http://localhost:8000/reservation', JSON.stringify(data)).then(function (response) {
             if(response.data.error) {
                 Notification.error({message: "<p>Room is not available at this time</p>", delay: 5000});
-                // $scope.reservation = response;
-                // setTimeout("location.reload()", 5000);
+                setTimeout("location.reload()", 5000);
                 // console.log(response);
             } else {
                 Notification.success({message: "<p>Reservation has been successfully completed</p>", delay: 5000});
-                // $scope.reservation = response.data;
-                // setTimeout("location.reload()", 5000);
+                setTimeout("location.reload()", 5000);
                 // console.log(response.data);
             }
-
         });
-
     };
 
   });
