@@ -18,8 +18,8 @@ class ReservationTableSeeder extends Seeder
             Reservation::create([
                 'user_id'       => $faker->numberBetween(1,10),
                 'room_id'       => $faker->numberBetween(1, 10),
-                'reserv_from'   => $faker->numberBetween(0, 23),
-                'reserv_to'     => $faker->numberBetween(0, 23),
+                'reserv_from'   => $faker->dateTime,
+                'reserv_to'     => $faker->dateTime,
                 'comment'       => $faker->realText($maxNbChars = 100, $indexSize = 2),
             ]);
         }

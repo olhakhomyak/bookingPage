@@ -17,8 +17,8 @@ class CreateTableReservation extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('room_id');
-            $table->time('reserv_from');
-            $table->time('reserv_to');
+            $table->dateTime('reserv_from');
+            $table->dateTime('reserv_to');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

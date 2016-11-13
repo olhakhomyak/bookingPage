@@ -16,15 +16,17 @@ class Reservation extends Model
         'comment'
     ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function userReserv() {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function roomReserv() {
-        return $this->hasOne(Room::class, 'id', 'room_id');
+        return $this->belongsTo(Room::class, 'room_id', 'id');
     }
 }

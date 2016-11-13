@@ -10,6 +10,19 @@ use App\Http\Controllers\Controller;
 
 class RoomsController extends Controller
 {
+
+    protected $model;
+
+    public function __construct(Room $room)
+    {
+        $this->model = $room;
+    }
+
+    public function getAllRooms()
+    {
+        return $this->model->with('roomReserv.userReserv')->get();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */

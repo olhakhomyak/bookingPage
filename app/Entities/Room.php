@@ -12,4 +12,11 @@ class Room extends Model
         'number',
         'room_type'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roomReserv(){
+        return $this->hasMany(Reservation::class, 'room_id', 'id');
+    }
 }

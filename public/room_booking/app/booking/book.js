@@ -1,39 +1,32 @@
 'use strict';
 
-angular.module('myApp.book', ['ngRoute',
-                              'ngAnimate',
-                              'ngSanitize',
-                              'ui.bootstrap',
-                              'ui-notification'])
+var app = angular.module('myApp.book', ['ngRoute',
+                                        'ngAnimate',
+                                        'ngSanitize',
+                                        'ui.bootstrap',
+                                        'ui-notification']);
 
-.config(['$routeProvider', function($routeProvider) {
+app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/book', {
     templateUrl: 'booking/book.html',
     controller: 'BookCtrl'
   });
-}])
+}]);
 
-.controller('BookCtrl', function($scope, $http, Notification) {
+app.filter('convertToDate', function() {
+    return function(str){
+        return new Date(str);
+    };
+});
+
+app.controller('BookCtrl', function($scope, $http, Notification) {
 
     $scope.rooms = [];
-    $scope.comments = [];
 
-    /**
-     * get the list of all rooms
-     */
-    $http.get("http://localhost:8000/room").then(function (response) {
-      $scope.rooms = response.data;
-        // console.log(response.data);
+    $http.get("http://localhost:8000/get-all-rooms").then(function (response) {
+       $scope.rooms = response.data;
+        console.log(response.data);
     });
-
-    /**
-     * get the list of all comments
-     */
-    $http.get("http://localhost:8000/reservation").then(function (response) {
-        $scope.comments = response.data;
-        // console.log(response.data)
-    });
-
 
     /**
      * get data from user form
@@ -46,8 +39,8 @@ angular.module('myApp.book', ['ngRoute',
         var data = {
             user_id: 5,
             room_id: room,
-            reserv_from: new Date(reserv_from).getHours(),
-            reserv_to: new Date(reserv_to).getHours(),
+            reserv_from: new Date(reserv_from).toISOString().slice(0, 19).replace('T', ' '),
+            reserv_to: new Date(reserv_to).toISOString().slice(0, 19).replace('T', ' '),
             comment: comment
         };
 
@@ -57,12 +50,14 @@ angular.module('myApp.book', ['ngRoute',
         $http.post('http://localhost:8000/reservation', JSON.stringify(data)).then(function (response) {
             if(response.data.error) {
                 Notification.error({message: "<p>Room is not available at this time</p>", delay: 5000});
-                setTimeout("location.reload()", 5000);
+                // $scope.reservation = response;
+                // setTimeout("location.reload()", 5000);
                 // console.log(response);
             } else {
                 Notification.success({message: "<p>Reservation has been successfully completed</p>", delay: 5000});
-                setTimeout("location.reload()", 5000);
-                // console.log(response);
+                // $scope.reservation = response.data;
+                // setTimeout("location.reload()", 5000);
+                // console.log(response.data);
             }
 
         });

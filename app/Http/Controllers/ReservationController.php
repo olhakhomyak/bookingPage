@@ -12,6 +12,18 @@ use App\Http\Controllers\Controller;
 class ReservationController extends Controller
 {
 
+    protected $model;
+
+    public function __construct(Reservation $reservation)
+    {
+        $this->model = $reservation;
+    }
+
+    public function getAllReserv()
+    {
+        return $this->model->with('userReserv', 'roomReserv')->get();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
@@ -27,13 +39,19 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
+        logger($request->all());
         $reservations = Reservation::where('room_id', $request->get('room_id'))
             ->where('reserv_from', '<', $request->get('reserv_from'))
             ->where('reserv_to', '>', $request->get('reserv_to'))
-            ->orWhere('reserv_from', '>', $request->get('reserv_from'))
+            ->orWhere('room_id', $request->get('room_id'))
+            ->where('reserv_from', '>', $request->get('reserv_from'))
             ->where('reserv_from', '<', $request->get('reserv_to'))
-            ->orWhere('reserv_to', '<', $request->get('reserv_to'))
-            ->where('reserv_to', '>', $request->get('reserv_from'))->get();
+            ->orWhere('room_id', $request->get('room_id'))
+            ->where('reserv_to', '<', $request->get('reserv_to'))
+            ->where('reserv_to', '>', $request->get('reserv_from'))
+            ->orWhere('room_id', $request->get('room_id'))
+            ->where('reserv_from', '>', $request->get('reserv_from'))
+            ->where('reserv_to', '<', $request->get('reserv_to'))->get();
 
         if (count($reservations)) {
             return response()->json([
@@ -44,7 +62,7 @@ class ReservationController extends Controller
         $reserv = new Reservation($request->all());
         $reserv->save();
 
-        return $reserv;
+        return $reserv->with('userReserv', 'roomReserv')->get();
     }
 
 }
